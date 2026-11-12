@@ -1,0 +1,65 @@
+[
+ {
+  "name": "Bar counter",
+  "pos": [
+   7.97,
+   2.09,
+   -5.74
+  ],
+  "src": "walk-in destination"
+ },
+ {
+  "name": "Mirror wall",
+  "pos": [
+   0.46,
+   4.54,
+   -20.98
+  ],
+  "src": "walk-in destination"
+ },
+ {
+  "name": "Neon sign",
+  "pos": [
+   -9.14,
+   1.92,
+   -13.73
+  ],
+  "src": "walk-in destination"
+ },
+ {
+  "name": "Bar stools",
+  "pos": [
+   3.74,
+   1.59,
+   -14.0
+  ],
+  "src": "walk-in destination"
+ },
+ {
+  "name": "Stage",
+  "pos": [
+   -3.41,
+   2.29,
+   -8.1
+  ],
+  "src": "objects: stage_music"
+ },
+ {
+  "name": "Games",
+  "pos": [
+   10.22,
+   5.98,
+   18.62
+  ],
+  "src": "objects: game"
+ },
+ {
+  "name": "Screens",
+  "pos": [
+   21.33,
+   6.34,
+   5.17
+  ],
+  "src": "objects: screen_tv"
+ }
+]

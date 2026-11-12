@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Learning models of people from shared virtual worlds: separating structure from the environment, individual dynamics, and episode-level intent.">
+  <meta name="keywords" content="crowd simulation, human behaviour, goal inference, virtual worlds, scene understanding">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learning Models of People from Virtual Worlds</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/academic.css?v=0.9.8">
+  <link rel="icon" href="data:,">
+
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Learning Models of People<br>from Virtual Worlds</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a href="https://seanhardestylewis.com">Sean Hardesty Lewis</a></span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Massachusetts Institute of Technology</span>
+          </div>
+          <div class="is-size-6 publication-authors contact">
+            <span class="author-block"><a href="mailto:end@mit.edu">end@mit.edu</a></span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper (Coming Soon)</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span><span>Code (Coming Soon)</span>
+                </a>
+              </span>
+              <span class="link-block" hidden style="display:none">
+                <a class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block" hidden style="display:none">
+                <a href="./media/light/teaser/teaser.mp4?v=0.9.4" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-film"></i></span><span>Video</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="./story.html" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-cube"></i></span><span>Interactive</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="./index_dark.html" class="external-link button is-normal is-rounded is-dark theme-switch" title="Dark mode" aria-label="Dark mode">
+                  <span class="icon"><i class="fas fa-moon"></i></span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline poster="./media/light/teaser/teaser_poster.jpg?v=0.9.4">
+        <source src="./media/light/teaser/teaser.mp4?v=0.9.4" type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        Where people stop is a stable property of the place; where one person goes next is not, until they start to move.
+        We model people as <span class="dnerf">agents with goals</span>, and the crowd's social structure survives in closed loop.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="walkin-carousel" class="carousel results-carousel">
+        <div class="item"><video poster="./media/light/poster/bc_bar_counter.jpg" muted loop playsinline preload="none" data-src="./media/light/video/bc_bar_counter.mp4"></video><p class="item-caption">Walking in to the bar counter</p></div>
+        <div class="item"><video poster="./media/light/poster/bc_back_bar.jpg" muted loop playsinline preload="none" data-src="./media/light/video/bc_back_bar.mp4"></video><p class="item-caption">Walking in to the back bar</p></div>
+        <div class="item"><video poster="./media/light/poster/bc_sign_neon.jpg" muted loop playsinline preload="none" data-src="./media/light/video/bc_sign_neon.mp4"></video><p class="item-caption">Walking in toward the neon sign</p></div>
+        <div class="item"><video poster="./media/light/poster/bc_seat_barstools.jpg" muted loop playsinline preload="none" data-src="./media/light/video/bc_seat_barstools.mp4"></video><p class="item-caption">Walking in to the bar stools</p></div>
+      </div>
+      <p class="has-text-centered carousel-note">Real arrivals replayed from measured head position and orientation inside the restored world. The inset shows each person's path.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Intelligent agents that share environments with people need models not only of the world, but of the people within it. Human behavior entangles three fundamentally different sources of variation: structure imposed by the environment, dynamics that persist across an individual, and intent that changes from one episode to the next. We learn models of people from shared virtual worlds that separate these sources using repeated observations of people acting across sessions and environments. We find that they generalize in strikingly different ways. Semantic scene representations transfer population-level patterns of where people go across worlds substantially better than geometry alone; individual movement style, including pace and path directness, persists across worlds even when destination preferences do not; and uncertainty within an episode is captured by a belief over latent goals that sharpens as a person acts. Richer observations of the person, including pose, head direction, identity, and social context, add little once this structure is represented. Our results suggest that generalizable models of people should separate where behavior is shaped by the world, how behavior reflects the individual, and what must be inferred about a person’s current intent.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section method">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Where people stop is a property of the place</h2>
+        <div class="content has-text-justified">
+          <p>
+            Every evening, people walk into a bar scene and nobody gives them a task. Replayed from telemetry inside the building's own geometry,
+            their paths carve the same corridors. We split the crowd into two halves that share no session and no person, and count where each half's
+            walks end on 1&nbsp;m cells. Both halves draw the same map (ρ = 0.95 in the bar scene, 0.76 in a hangout scene).
+          </p>
+        </div>
+        <div class="columns is-variable is-4">
+          <div class="column"><video class="method-video" muted loop playsinline preload="none" data-src="./media/light/clips/crowd.mp4?v=0.9.8" poster="./media/light/clips/crowd.jpg"></video><p class="fig-caption">Twenty minutes of real arrivals, scrubbed through time.</p></div>
+          <div class="column"><video class="method-video" muted loop playsinline preload="none" data-src="./media/light/clips/field.mp4" poster="./media/light/clips/field.jpg"></video><p class="fig-caption">Where walks end, rising as columns and morphing between the two halves.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Intent is the bottleneck</h2>
+        <div class="content has-text-justified">
+          <p>
+            The same map is a poor guide to any single walk. Its best guess lands within 3&nbsp;m of where a walk stops only 5% of the time in the bar scene,
+            and even twenty guesses miss 48% of walks. Watching the walk changes this. A Bayesian goal filter over 512 candidate cells, driven by the
+            walker's heading and the shortest route to each cell, sharpens with every step: after eight seconds the top five candidates include the true
+            goal 40% of the time, against 9% for popularity alone.
+          </p>
+        </div>
+        <video class="method-video wide" muted loop playsinline preload="none" data-src="./media/light/clips/goal.mp4" poster="./media/light/clips/goal.jpg"></video>
+        <p class="fig-caption">One real walk. Columns show the belief over candidate goals; the ring marks where the person actually stopped.</p>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">A crowd of agents with goals</h2>
+        <div class="content has-text-justified">
+          <p>
+            We simulate each person as an agent that runs the same loop once a second: decide whether to stay or go, choose a goal that is either a
+            person or a place, route there, and walk. Only who is present comes from the recording; every decision is the model's own.
+          </p>
+        </div>
+        <div class="flow-fig">
+          <div class="node real"><span class="n">0</span><h3>Who is here</h3><p>Arrivals and departures from the room</p></div>
+          <div class="arrow">→</div>
+          <div class="node learned"><span class="n">1</span><h3>Stay or go?</h3><p>A departure hazard for everyone standing still</p></div>
+          <div class="arrow">→</div>
+          <div class="node learned"><span class="n">2</span><h3>Who or where?</h3><p>Head for a person, or for a place</p></div>
+          <div class="arrow">→</div>
+          <div class="node"><span class="n">3</span><h3>Route</h3><p>The shortest walkable path there</p></div>
+          <div class="arrow">→</div>
+          <div class="node learned"><span class="n">4</span><h3>Walk</h3><p>Step by step, toward the next waypoint</p></div>
+        </div>
+        <div class="fig-gap" aria-hidden="true"></div>
+        <video class="method-video wide" muted loop playsinline preload="none" data-src="./media/light/clips/sim.mp4" poster="./media/light/clips/sim.jpg"></video>
+        <p class="fig-caption">The simulated crowd in the bar scene, rolled out in closed loop.</p>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Zero-shot transfer</h2>
+        <div class="content has-text-justified">
+          <p>
+            Fitted only on the bar scene, the simulator runs unchanged in a pub scene it has never seen. The share of people standing alone is
+            reproduced (error 0.07, against 0.60 for a null model), but the simulated crowd is more restless than the real one and drifts to the upper levels.
+          </p>
+        </div>
+        <div class="columns is-variable is-3">
+          <div class="column"><video class="method-video" muted loop playsinline preload="none" data-src="./media/light/video/gp_real.mp4?v=0.9.7" poster="./media/light/poster/gp_real.jpg?v=0.9.7"></video><p class="fig-caption"><span class="swatch real"></span>Real crowd</p></div>
+          <div class="column"><video class="method-video" muted loop playsinline preload="none" data-src="./media/light/video/gp_sim.mp4?v=0.9.8" poster="./media/light/poster/gp_sim.jpg?v=0.9.8"></video><p class="fig-caption"><span class="swatch sim"></span>Simulated, zero-shot</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Results</h2>
+        <div class="content has-text-justified">
+          <p>All splits are person-disjoint. Shaded bands are 95% bootstrap intervals over sessions; hover a chart for exact values.</p>
+        </div>
+        <div class="chart-card">
+          <h3 class="title is-5">The individual walk is hard to call at departure</h3>
+          <div class="chart two-up" data-chart="hitk"></div>
+          <div class="chart-legend"><span><i style="--c:#c98516"></i>Nearest popular spot</span><span><i style="--c:#363636"></i>Most popular spots</span><span><i style="--c:#b5b5b5"></i>Chance</span></div>
+        </div>
+        <div class="chart-card">
+          <h3 class="title is-5">Social structure survives closed-loop rollout, and transfers</h3>
+          <div class="chart" data-chart="closed"></div>
+          <div class="chart-legend"><span><i style="--c:#3273dc"></i>Goal simulator</span><span><i style="--c:#9fb8e8"></i>No social inputs</span><span><i style="--c:#7a7a7a"></i>Next-step transformer</span><span><i style="--c:#c8c8c8"></i>Null</span></div>
+        </div>
+        <div class="columns">
+          <div class="column"><div class="chart-card"><h3 class="title is-5">Watching the walk reveals the goal</h3><div class="chart" data-chart="goal"></div></div></div>
+          <div class="column"><div class="chart-card"><h3 class="title is-5">Most of the time, people stay put</h3><div class="chart" data-chart="stay"></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Explore</h2>
+        <div class="content has-text-justified">
+          <p>
+            Step inside the four recorded walk-ins in 3D: the restored bar as a colour point cloud, everyone in the room as SMPL-X bodies fitted to their recorded skeletons, and the camera wearer's head camera (<a href="./interactive/">open full page</a>). Or read the
+            <a href="./story.html">interactive scroll story</a> built from the same data.
+          </p>
+        </div>
+        <div class="launch" id="launch">
+          <img src="./media/light/poster/bc_bar_counter.jpg" alt="">
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@misc{lewis2026learningmodels,
+  author    = {Lewis, Sean Hardesty},
+  title     = {Learning Models of People from Virtual Worlds},
+  year      = {2026},
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="./story.html" title="Interactive story"><i class="fas fa-cube"></i></a>
+      <a class="icon-link" href="mailto:end@mit.edu" title="Email"><i class="fas fa-envelope"></i></a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            The page template is borrowed from <a href="https://nerfies.github.io">Nerfies</a>
+            (<a href="https://github.com/nerfies/nerfies.github.io">source code</a>).
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="./static/js/charts.js?v=0.9.6"></script>
+<script src="./static/js/academic.js?v=0.9.8"></script>
+</body>
+</html>

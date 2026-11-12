@@ -1,0 +1,39 @@
+/* Dark mode for the academic page (index_dark.html), layered over bulma + Nerfies index.css + academic.css. */
+html.dark, html.dark body { background: #0b0b0d; color: #c7c7cc; color-scheme: dark; }
+html.dark .hero, html.dark .section { background: transparent; }
+html.dark .hero.is-light { background: #121214 !important; }
+html.dark .title, html.dark .publication-title { color: #f5f5f7 !important; }
+html.dark .subtitle { color: #c7c7cc !important; }
+html.dark .content, html.dark .content p, html.dark .publication-authors { color: #c7c7cc; }
+html.dark a { color: #7fb0ff; }
+html.dark .publication-authors .author-block a { color: #7fb0ff !important; }
+html.dark .button.is-dark { background: #f5f5f7; color: #0b0b0d; border-color: transparent; }
+html.dark .button.is-dark:hover { background: #ffffff; color: #0b0b0d; }
+html.dark .button.is-dark .icon, html.dark .button.is-dark svg { color: #0b0b0d; }
+html.dark .content pre, html.dark pre { background: #151517; color: #d1d1d6; }
+html.dark code { background: transparent; color: #d1d1d6; }
+html.dark .footer { background: #0e0e10; color: #8e8e93; }
+html.dark .footer .icon-link { color: #f5f5f7; }
+
+/* media frames */
+html.dark #teaser, html.dark .method-video { background: #0b0b0d; border-color: transparent; }   /* videos are graded to the page colour */
+html.dark .item-caption { color: #c7c7cc; }
+html.dark .fig-caption, html.dark .carousel-note { color: #8e8e93; }
+html.dark .swatch.real { background: #f2c27b; } html.dark .swatch.sim { background: #8ab4ff; }
+html.dark .slider-navigation-previous, html.dark .slider-navigation-next { background: #1c1c1e; color: #f5f5f7; box-shadow: 0 0 0 1px #2c2c2e; }
+html.dark .slider-pagination .slider-page { background: #3a3a3c; }
+
+/* simulator loop figure */
+html.dark .flow-fig .node { background: #151517; border-color: #2a2a2d; }
+html.dark .flow-fig .node.learned { background: #101a2c; border-color: #2c4f8a; }
+html.dark .flow-fig .node.real { background: #221a0c; border-color: #6b4c16; }
+html.dark .flow-fig h3 { color: #f5f5f7; } html.dark .flow-fig p { color: #a1a1a6; } html.dark .flow-fig .n { color: #6e6e73; }
+html.dark .flow-fig .arrow { color: #48484a; }
+
+/* charts */
+html.dark .chart-card { background: #121214; border-color: #232326; }
+html.dark .c-grid { stroke: #232326; } html.dark .c-tick { fill: #6e6e73; } html.dark .c-axis { fill: #8e8e93; }
+html.dark .c-title, html.dark .c-group { fill: #e5e5ea; } html.dark .c-val { fill: #c7c7cc; }
+html.dark .c-vline { stroke: #555; } html.dark .c-tipbox { fill: rgba(24,24,26,.96); stroke: #333; }
+html.dark .c-tip { fill: #e5e5ea; } html.dark .c-tip-h { fill: #8e8e93; }
+html.dark .chart-legend { color: #8e8e93; }

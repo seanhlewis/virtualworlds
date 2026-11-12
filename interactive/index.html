@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Learning Models of People: Interactive Walk-ins</title>
+<style>
+  :root { --bg: #fafafa; --fg: #1a1a1a; --mut: #666; --faint: #999; --card: rgba(255,255,255,.88); --line: rgba(0,0,0,.12);
+          --chip: #f4f4f5; --chipline: #e2e2e2; --acc: #2b6cb0; }
+  html.dark { --bg: #0b0b0d; --fg: #e8e8ea; --mut: #a0a0a6; --faint: #75757c; --card: rgba(22,22,26,.86); --line: rgba(255,255,255,.12);
+              --chip: #1c1c21; --chipline: #2c2c33; --acc: #8ab4ff; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); }
+  body { font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: var(--fg); }
+  #stage { position: fixed; inset: 0; }
+  #stage iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .card { position: fixed; z-index: 10; background: var(--card); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+          border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 4px 18px rgba(0,0,0,.12); }
+  #controls { top: 12px; left: 12px; padding: 10px 12px; width: min(320px, calc(100vw - 24px)); }
+  #title { font-size: .95rem; font-weight: 600; letter-spacing: -.01em; margin: 0 0 8px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+  #title span { color: var(--mut); font-weight: 400; font-size: .8rem; }
+  .lbl { display: block; font-size: .68rem; text-transform: uppercase; letter-spacing: .07em; color: var(--mut); margin-bottom: 5px; }
+  #seqlist { margin-bottom: 10px; }
+  #seqlist button { display: block; width: 100%; text-align: left; font: .8rem/1.35 inherit; font-family: inherit; padding: 6px 9px; margin-bottom: 3px;
+          border: 1px solid var(--chipline); border-radius: 6px; background: var(--chip); color: var(--fg); cursor: pointer; }
+  #seqlist button:hover { border-color: var(--acc); }
+  #seqlist button[aria-selected="true"] { background: var(--acc); border-color: var(--acc); color: #fff; font-weight: 600; }
+  html.dark #seqlist button[aria-selected="true"] { color: #0b0b0d; }
+  #seqlist button small { display: block; color: inherit; opacity: .7; font-size: .7rem; font-weight: 400; }
+  #legend { display: grid; gap: 3px; margin-bottom: 10px; font-size: .76rem; color: var(--mut); }
+  #legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 7px; vertical-align: -1px; }
+  #viewrow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  #viewrow button, #viewrow a { font: inherit; font-size: .82rem; padding: 4px 11px; border: 1px solid var(--chipline); border-radius: 999px;
+          background: var(--chip); color: var(--fg); cursor: pointer; text-decoration: none; }
+  #viewrow button:hover, #viewrow a:hover { border-color: var(--acc); }
+  #credit { margin-top: 9px; padding-top: 7px; border-top: 1px solid var(--line); font-size: .68rem; color: var(--faint); }
+  #credit a { color: inherit; }
+  #videobox, #showvideo { bottom: 76px; left: 12px; }
+  #videobox { width: min(420px, calc(100vw - 24px)); overflow: hidden; }
+  #videobox video { width: 100%; display: block; background: #000; aspect-ratio: 16 / 9; }
+  #videobox .bar { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 5px 10px; font-size: .76rem; color: var(--mut);
+          border-top: 1px solid var(--line); }
+  #videobox .bar button { font: inherit; font-size: .76rem; background: none; border: 0; color: var(--mut); cursor: pointer; padding: 0 2px; }
+  #videobox .bar button:hover { color: var(--acc); }
+  #showvideo { padding: 7px 12px; font: inherit; font-size: .78rem; color: var(--fg); cursor: pointer; display: none; }
+  @media (max-width: 820px), (max-height: 600px) {
+    #videobox { width: min(240px, calc(100vw - 24px)); } #legend { display: none; }
+    #controls { width: min(260px, calc(100vw - 24px)); }
+  }
+</style>
+</head>
+<body>
+<div id="stage"><iframe id="viewer" title="Interactive 3D walk-in" allow="fullscreen"></iframe></div>
+
+<div class="card" id="controls">
+  <div id="title">Learning Models of People <span>· interactive walk-ins</span></div>
+  <span class="lbl">Walk-in</span>
+  <div id="seqlist"></div>
+  <span class="lbl">Legend</span>
+  <div id="legend">
+    <div><i style="background:#f0b478"></i>Camera wearer (head-tracked; body pose estimated)</div>
+    <div><i style="background:#b0bed4"></i>Everyone else in the room (recorded skeletons)</div>
+    <div><i style="background:#ec00ec"></i>Head camera and path</div>
+  </div>
+  <span class="lbl">View</span>
+  <div id="viewrow">
+    <button type="button" id="follow" aria-pressed="true">Camera: follow</button>
+    <button type="button" id="restart">Restart</button>
+    <button type="button" id="fullscreen">Fullscreen</button>
+    <a id="back" href="../index.html">Back to paper</a>
+  </div>
+  <div id="credit">Bodies: <a href="https://smpl-x.is.tue.mpg.de/" target="_blank" rel="noopener">SMPL-X</a> (research licence).
+    Viewer: <a href="https://github.com/nerfstudio-project/viser" target="_blank" rel="noopener">viser</a> (Apache-2.0).</div>
+</div>
+
+<div class="card" id="videobox">
+  <video id="video" muted autoplay playsinline></video>
+  <div class="bar"><span>First-person view (the camera wearer)</span><button type="button" id="hidevideo">hide</button></div>
+</div>
+<button class="card" id="showvideo" type="button">Show first-person view</button>
+
+<script>
+  // One .viser recording (viser client, offline playback) and one first-person video per walk-in.
+  const SEQUENCES = [
+    { id: "bc_bar_counter",    name: "To the bar counter", note: "24 s, 36 others in the room" },
+    { id: "bc_back_bar",       name: "To the back bar",    note: "24 s, 49 others" },
+    { id: "bc_seat_barstools", name: "To the bar stools",  note: "24 s, 38 others" },
+    { id: "bc_sign_neon",      name: "To the neon sign",   note: "24 s, 48 others" },
+  ];
+  const params = new URLSearchParams(location.search);
+  const DARK = params.has("dark");
+  if (DARK) { document.documentElement.classList.add("dark"); document.getElementById("back").href = "../index_dark.html"; }
+  const VIDEO_DIR = DARK ? "../media/video/" : "../media/light/video/";
+  const viewer = document.getElementById("viewer"), video = document.getElementById("video");
+  const videobox = document.getElementById("videobox"), showvideo = document.getElementById("showvideo"), seqlist = document.getElementById("seqlist");
+  let follow = params.get("cam") !== "fixed";
+  let cur = Math.min(Math.max(parseInt(params.get("seq") ?? "0") || 0, 0), SEQUENCES.length - 1);
+  const viewerUrl = (file) => "viewer/index.html?playbackPath=" + encodeURIComponent("../" + file) + (DARK ? "&darkMode" : "");
+  const buttons = []; const followBtn = document.getElementById("follow");
+
+  function load() {
+    const seq = SEQUENCES[cur];
+    viewer.src = viewerUrl("data/" + seq.id + (follow ? "_follow" : "") + ".viser?v=4");
+    followBtn.textContent = "Camera: " + (follow ? "follow" : "fixed"); followBtn.setAttribute("aria-pressed", String(follow));
+    const vsrc = VIDEO_DIR + seq.id + ".mp4";
+    if (!video.src.endsWith(vsrc.replace("../", ""))) video.src = vsrc;
+    video.currentTime = 0; video.play().catch(() => {});
+    buttons.forEach((b, i) => b.setAttribute("aria-selected", String(i === cur)));
+    const q = new URLSearchParams(location.search); q.set("seq", cur); if (follow) q.delete("cam"); else q.set("cam", "fixed"); history.replaceState(null, "", "?" + q.toString());
+  }
+  SEQUENCES.forEach((seq, i) => {
+    const b = document.createElement("button"); b.type = "button";
+    b.innerHTML = seq.name + "<small>" + seq.note + "</small>";
+    b.onclick = () => { cur = i; load(); }; seqlist.appendChild(b); buttons.push(b);
+  });
+  document.getElementById("restart").onclick = load;
+  // when a walk-in ends (its 24 s first-person video, the same length as the recording), move on; after the last, cycle to the first
+  video.addEventListener("ended", () => { cur = (cur + 1) % SEQUENCES.length; load(); });
+  // follow: the recording keeps the camera wearer centred (drag to orbit around them); fixed: the room stays still
+  followBtn.onclick = () => { follow = !follow; load(); };
+  document.getElementById("fullscreen").onclick = () => {
+    if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen().catch(() => {});
+  };
+  document.getElementById("hidevideo").onclick = () => { videobox.style.display = "none"; showvideo.style.display = "block"; };
+  showvideo.onclick = () => { videobox.style.display = ""; showvideo.style.display = "none"; };
+  load();
+</script>
+</body>
+</html>

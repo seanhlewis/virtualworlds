@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Where people go when nobody tells them: aggregate regularity and individual intent in self-directed crowds across fully known 3D worlds.">
+  <meta name="theme-color" content="#050506">
+  <title>Learning Models of People from Virtual Worlds</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="vr_site/style.css?v=0.9.8d">
+</head>
+<body>
+  <nav class="nav" aria-label="Page navigation">
+    <div class="nav-inner">
+      <a class="brand" href="#top">Learning Models of People</a>
+      <div class="nav-links">
+        <a href="#walkins">Walk-ins</a>
+        <a href="#transfer">Transfer</a>
+        <a href="#model" class="keep">Model</a>
+        <a href="#results" class="keep">Results</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== scroll story ===== -->
+  <section class="story" id="story" aria-label="Scroll story">
+    <div class="stage" id="top">
+      <canvas id="scene" aria-hidden="true"></canvas>
+      <p class="story-loading">Loading the world…</p>
+
+      <div class="beat hero" data-in="-1" data-out=".085">
+        <h1 data-teaser-html="Learning Models of People&lt;br&gt;&lt;em&gt;from Virtual Worlds&lt;/em&gt;">Where people <em>go</em></h1>
+        <p class="lede">What people in shared virtual worlds reveal about places, intentions, and crowds, when nobody tells them where to go.</p>
+        <p class="byline">Sean Hardesty Lewis · MIT · 2026</p>
+        <span class="scroll-hint"><span>Scroll</span><i></i></span>
+      </div>
+
+      <div class="beat" data-in=".11" data-out=".22">
+        <h2>Every evening, people walk in. <em>Nobody gives them a task.</em></h2>
+        <p>Each point of light is one real person, replayed from telemetry. The building is drawn from its own geometry.</p>
+      </div>
+      <div class="beat" data-in=".245" data-out=".39">
+        <h2>Their paths carve <em>the same corridors.</em></h2>
+        <p data-teaser="Twenty minutes of one evening at 40× speed. Each trail fades, but what it leaves behind accumulates.">Scroll to scrub time. Each trail fades, but what it leaves behind accumulates.</p>
+      </div>
+      <div class="beat" data-in=".42" data-out=".495">
+        <h2>Where people stop is a property <em>of the place.</em></h2>
+        <p>Each column is how often a walk ends on that square metre.</p>
+      </div>
+      <div class="beat" data-in=".51" data-out=".59">
+        <h2 data-teaser-html="Different people, &lt;em&gt;same places.&lt;/em&gt;">Both halves draw <em>the same map.</em></h2>
+        <span class="big" data-teaser-html="0.95 match">0.95<small>rank correlation</small></span>
+        <p>Split the crowd in two, with no person in common, and both halves draw the same map.</p>
+      </div>
+      <div class="beat" data-in=".615" data-out=".675">
+        <h2>But where they go next is <em>nearly a guess.</em></h2>
+        <p>The crowd's own map picks the right spot only <span class="real-c">5%</span> of the time.</p>
+      </div>
+      <div class="beat" data-in=".685" data-out=".75">
+        <h2>Until they <em>start to move.</em></h2>
+        <span class="big" data-teaser-html="3× better in 3 seconds">9 → 40%<small>in 8 seconds</small></span>
+        <p>Columns show the belief about where this person is heading. Intent, not the map, is the bottleneck.</p>
+      </div>
+      <div class="beat" data-in=".785" data-out=".875">
+        <h2>So we model people as <em>agents with goals.</em></h2>
+        <p>When to leave. Who or where to go. Then walk. Nothing else is scripted from the recording.</p>
+      </div>
+      <div class="beat" data-in=".885" data-out=".975">
+        <h2>The social structure <em>survives.</em></h2>
+        <p>Who stands alone and who stands together is reproduced, and it transfers to worlds the model has never seen.</p>
+      </div>
+
+      <div class="beat finale" data-in="1.07" data-out="1.49">
+        <h2>Three places it <em>has never seen.</em></h2>
+      </div>
+      <div class="beat finale" data-in="1.51" data-out="2.1">
+        <h2>Predicted zero-shot, <em>trained only on other scenes.</em></h2>
+      </div>
+
+      <div class="hud" aria-hidden="true">
+        <div class="keys"><span data-hud-key="real"><i style="--c:#f2c27b"></i>Real people</span><span data-hud-key="sim"><i style="--c:#8ab4ff"></i>Simulated</span></div>
+        <span data-hud="time"></span>
+      </div>
+      <div class="rail" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+  </section>
+
+  <main>
+    <section class="section" id="walkins">
+      <div class="wrap">
+        <div class="head reveal">
+          <h2>Walk in <em>with them.</em></h2>
+          <p>Real arrivals, replayed from measured head position and orientation inside the restored world. Everyone else is animated from the same recording.</p>
+        </div>
+        <div class="video-grid">
+          <figure class="media-card reveal" tabindex="0"><div class="v"><video muted playsinline loop preload="none" poster="media/poster/bc_bar_counter.jpg" data-src="media/video/bc_bar_counter.mp4" aria-label="Walk-in to the bar counter"></video></div>
+            <figcaption><h3>The bar counter</h3><p>27 m in 24 s, straight to the busiest stop in the building.</p></figcaption></figure>
+          <figure class="media-card reveal" tabindex="0"><div class="v"><video muted playsinline loop preload="none" poster="media/poster/bc_back_bar.jpg" data-src="media/video/bc_back_bar.mp4" aria-label="Walk-in to the back bar"></video></div>
+            <figcaption><h3>The back bar</h3><p>Across the room to the bottles behind the bar.</p></figcaption></figure>
+          <figure class="media-card reveal" tabindex="0"><div class="v"><video muted playsinline loop preload="none" poster="media/poster/bc_sign_neon.jpg" data-src="media/video/bc_sign_neon.mp4" aria-label="Walk-in toward the neon sign"></video></div>
+            <figcaption><h3>The neon sign</h3><p>Through the lounge toward the menu and the open sign.</p></figcaption></figure>
+          <figure class="media-card reveal" tabindex="0"><div class="v"><video muted playsinline loop preload="none" poster="media/poster/bc_seat_barstools.jpg" data-src="media/video/bc_seat_barstools.mp4" aria-label="Walk-in to the bar stools"></video></div>
+            <figcaption><h3>The bar stools</h3><p>Around the curve of the bar to an empty seat.</p></figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="launch reveal" id="launch">
+          <img src="media/poster/bc_bar_counter.jpg" alt="">
+          <div class="over">
+            <h3>Step inside the recording.</h3>
+            <p>An interactive replay of one walk-in, in the browser. Drag to look around, press play to follow it. About 230&nbsp;MB.</p>
+            <button class="btn" type="button" id="launch-btn">Launch 3D replay</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="transfer">
+      <div class="wrap">
+        <div class="head reveal">
+          <h2>A world it <em>has never seen.</em></h2>
+          <p>Fitted only on the bar scene, the simulator runs unchanged in a pub scene it has never seen. Who stands with whom carries over. How restless people are does not.</p>
+        </div>
+        <div class="seg reveal" role="tablist" aria-label="Unseen world views" data-sync="gp">
+          <button class="active" type="button" data-key="real"><i style="--c:#f2c27b"></i>Real crowd</button>
+          <button type="button" data-key="sim"><i style="--c:#8ab4ff"></i>Simulated, zero-shot</button>
+        </div>
+        <div class="viewer stack reveal" id="gp">
+          <video class="on" data-key="real" muted playsinline loop preload="none" poster="media/poster/gp_real.jpg?v=0.9.7" data-src="media/video/gp_real.mp4?v=0.9.7" aria-label="Real crowd in the unseen world"></video>
+          <video data-key="sim" muted playsinline loop preload="none" poster="media/poster/gp_sim.jpg?v=0.9.8" data-src="media/video/gp_sim.mp4?v=0.9.8" aria-label="Zero-shot simulated crowd in the unseen world"></video>
+        </div>
+        <p class="note reveal">Twenty minutes of one evening at 40× speed, seen from above. Both views share the same people and the same arrival times.</p>
+      </div>
+    </section>
+
+    <section class="section" id="model">
+      <div class="wrap">
+        <div class="head reveal">
+          <h2>Four decisions, <em>on repeat.</em></h2>
+          <p>Every simulated person runs the same loop, once a second. Most of it is learned from the recordings; only who is present is taken from them.</p>
+        </div>
+        <div class="flow reveal">
+          <div class="node"><span class="n">00</span><h3>Who is here</h3><p>Arrivals and departures from the room.</p></div>
+          <div class="node"><span class="n">01</span><h3>Stay or go?</h3><p>A departure hazard for everyone standing still.</p></div>
+          <div class="node"><span class="n">02</span><h3>Who or where?</h3><p>Head for a person, or for a place.</p></div>
+          <div class="node"><span class="n">03</span><h3>Route</h3><p>The shortest walkable path there.</p></div>
+          <div class="node"><span class="n">04</span><h3>Walk</h3><p>Step by step, toward the next waypoint.</p></div>
+        </div>
+        <div class="loopback reveal"><span>Arrive, stand, decide again</span><i></i><span>↺</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="results">
+      <div class="wrap">
+        <div class="head reveal">
+          <h2>The numbers, <em>held out.</em></h2>
+          <p>Person-disjoint splits throughout. Shaded bands are 95% bootstrap intervals over sessions.</p>
+        </div>
+        <div class="stats reveal">
+          <div><strong>0.95</strong><span>agreement between maps drawn by two halves of the crowd</span></div>
+          <div><strong>5%</strong><span>of walks called by the map's single best guess</span></div>
+          <div><strong>40%</strong><span>top-5 goal hits after eight seconds of motion, up from 9%</span></div>
+          <div><strong>0.07</strong><span>error in who stands alone, against 0.62 for a next-step transformer</span></div>
+        </div>
+        <div class="plots">
+          <figure class="plot wide reveal"><h3>The individual walk is hard to call at departure</h3><p>Even with 20 guesses from the crowd's own map, 48% of walks in the bar scene and 68% in the hangout scene are missed.</p>
+            <div class="chart two-up" data-chart="hitk" aria-label="Share of walks whose stop is hit within 3 m, by number of guesses"></div><div class="chart-legend"><span><i style="--c:#f2c27b"></i>Nearest popular spot</span><span><i style="--c:#c7c7cc"></i>Most popular spots</span><span><i style="--c:#5a5a60"></i>Chance</span></div></figure>
+          <figure class="plot wide reveal"><h3>Social structure survives closed-loop rollout, and transfers</h3><p>Error in the share of people standing alone. Fitted on the bar scene, applied unchanged to the hangout and pub scenes.</p>
+            <div class="chart" data-chart="closed"></div><div class="chart-legend"><span><i style="--c:#8ab4ff"></i>Goal simulator</span><span><i style="--c:#4f6896"></i>No social inputs</span><span><i style="--c:#7c7f86"></i>Next-step transformer</span><span><i style="--c:#46484d"></i>Null</span></div></figure>
+          <figure class="plot reveal"><h3>Watching the walk reveals the goal</h3><p>Top-5 goal hits within 3 m, by time since the walk began.</p>
+            <div class="chart" data-chart="goal" aria-label="Top-5 goal hit rate over the first seconds of a walk"></div></figure>
+          <figure class="plot reveal"><h3>Most of the time, people stay put</h3><p>Share of windows with under half a metre of movement.</p>
+            <div class="chart" data-chart="stay" aria-label="Share of windows with under 0.5 m of movement by window length"></div></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section closing">
+      <div class="wrap reveal">
+        <h2>Places are predictable. <em>People are not, until they move.</em></h2>
+        <div class="actions">
+          <a class="btn" href="#top">Replay the story</a>
+          <button class="btn ghost" id="cite-toggle" type="button" aria-expanded="false" aria-controls="citation-panel">Cite</button>
+        </div>
+        <pre class="citation" id="citation-panel" hidden>@misc{lewis2026learningmodels,
+  title  = {Learning Models of People from Virtual Worlds},
+  author = {Lewis, Sean Hardesty},
+  year   = {2026}
+}</pre>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap"><span>Learning Models of People from Virtual Worlds · 2026</span><span>Rendered from telemetry and each world's own geometry.</span></div></footer>
+
+  <script type="module" src="vr_site/story.js?v=0.9.8b"></script>
+  <script src="vr_site/charts.js?v=0.9.6"></script>
+  <script src="vr_site/site.js"></script>
+</body>
+</html>
